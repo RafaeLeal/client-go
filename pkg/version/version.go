@@ -23,9 +23,14 @@ import (
 	apimachineryversion "k8s.io/apimachinery/pkg/version"
 )
 
+var FakeVersion *apimachineryversion.Info
+
 // Get returns the overall codebase version. It's for detecting
 // what code a binary was built from.
 func Get() apimachineryversion.Info {
+	if FakeVersion != nil {
+		return *FakeVersion
+	}
 	// These variables typically come from -ldflags settings and in
 	// their absence fallback to the settings in pkg/version/base.go
 	return apimachineryversion.Info{
